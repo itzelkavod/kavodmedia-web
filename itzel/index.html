@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Itzel Olarte</title>
-<meta name="description" content="Comunicación y estrategia. Dirección y comunicación estratégica para líderes, gobiernos y ministerios.">
+<meta name="description" content="Comunicación y estrategia. Dirección y comunicación estratégica para líderes, equipos, gobiernos y ministerios.">
 <meta property="og:title" content="Itzel Olarte">
 <meta property="og:image" content="itzel-cutout.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -425,7 +425,8 @@
   @keyframes marq{from{transform:translateX(0)}to{transform:translateX(calc(-50% - 11px))}}
   @media (prefers-reduced-motion:reduce){.marq{overflow-x:auto}.marq .track{animation:none}}
   @media (max-width:700px){.marq{margin:0 -16px 14px}.marq .track{gap:14px;animation-duration:45s}.marq img{width:250px}@keyframes marq{to{transform:translateX(calc(-50% - 7px))}}}
-  .marq.fotos .track{animation-duration:70s}
+  .marq.fotos .track{animation-duration:34s}
+  @media (max-width:700px){.marq.fotos .track{animation-duration:26s}}
   .marq .ph{position:relative;margin:0;flex:none;height:clamp(300px,30vw,440px);border-radius:22px;overflow:hidden;border:1px solid rgba(255,255,255,.12);box-shadow:0 18px 40px -20px rgba(0,0,0,.8)}
   .marq .ph img{height:100%;width:auto;border:0;border-radius:0;box-shadow:none;display:block}
   .marq .ph:hover img{transform:scale(1.04)}
@@ -625,7 +626,7 @@
 
 <div class="form" role="dialog" aria-label="Formulario de contacto">
   <div class="top">
-    <span class="kicker" id="count">1 / 5</span>
+    <span class="kicker" id="count">1 / 6</span>
     <button class="close" id="close">Cerrar ✕</button>
   </div>
   <div class="bar"><i id="bar"></i></div>
@@ -640,6 +641,12 @@
       <div class="kicker">Contexto</div>
       <p class="q serif">¿Desde dónde me escribes?</p>
       <input type="text" placeholder="Cargo u organización">
+      <p class="err"></p><button class="btn nx glow">Siguiente →</button>
+    </div>
+    <div class="step" data-k="contacto">
+      <div class="kicker">Contacto</div>
+      <p class="q serif">¿Cuál es tu WhatsApp?</p>
+      <input type="tel" inputmode="tel" autocomplete="tel" placeholder="Con lada, ej. 52 33 1234 5678">
       <p class="err"></p><button class="btn nx glow">Siguiente →</button>
     </div>
     <div class="step" data-k="tema" data-type="opts">
@@ -696,7 +703,10 @@
   function send(){
     var b=document.getElementById('send'); b.disabled=true; b.textContent='Enviando…';
     var done=function(){
-      steps[i].innerHTML='<div class="kicker">Recibido</div><p class="q serif">Gracias, '+(data.nombre||'').split(' ')[0]+'.</p>'+(CALENDLY_URL?'<p style="color:#cfcfc8;font-size:18px">Elige el horario que mejor te funcione:</p><a class="pill glow" style="margin-top:20px" target="_blank" rel="noopener" href="'+CALENDLY_URL+'">Elegir horario →</a>':'<p style="color:#cfcfc8;font-size:18px">Te escribo muy pronto.</p>');
+      var nom=(data.nombre||'').split(' ')[0];
+      var msg='Hola Itzel, soy '+(data.nombre||'')+'. Acabo de llenar el formulario de tu página'+(data.tema?' sobre '+data.tema:'')+'.';
+      var wa='https://wa.me/523333941280?text='+encodeURIComponent(msg);
+      steps[i].innerHTML='<div class="kicker">Recibido</div><p class="q serif">Gracias, '+nom+'.</p><p style="color:#cfcfc8;font-size:18px">Mándame un WhatsApp para darle seguimiento más rápido.</p><a class="pill glow" style="margin-top:20px" target="_blank" rel="noopener" href="'+wa+'">Escribirme por WhatsApp →</a>'+(CALENDLY_URL?'<a class="pill glow" style="margin:12px 0 0 12px" target="_blank" rel="noopener" href="'+CALENDLY_URL+'">Elegir horario →</a>':'');
       bar.style.width='100%';
     };
     if(!SHEET_URL){console.log('[modo prueba]',data);done();return}
